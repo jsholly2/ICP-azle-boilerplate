@@ -1,5 +1,5 @@
 # ICP-azle-boilerplate
-# Lottery
+# Tipping System
 
 A Tipping canister built on the ICP network. Users can tip one another on the network
 
