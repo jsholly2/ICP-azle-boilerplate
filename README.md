@@ -79,7 +79,7 @@ dfx canister call message_board getAddressFromPrincipal '(principal "address")'
 ```
 You should get a similar output below
 
-![]()
+![](https://github.com/ozo-vehe/ICP-azle-boilerplate/blob/main/first.png)
 
 2. `sendTip()`:
 
@@ -91,7 +91,7 @@ dfx canister call message_board sendTip '(record {"name"="tippers_name"; "messag
 
 You should get a similar output below
 
-![]()
+![](https://github.com/ozo-vehe/ICP-azle-boilerplate/blob/main/second.png)
 
 3. `getTips()`:
 
@@ -103,7 +103,7 @@ dfx canister call message_board getTips '()'
 
 You should get similar output below
 
-![]()
+![](https://github.com/ozo-vehe/ICP-azle-boilerplate/blob/main/third.png)
 
 4. `getTipById()`:
 
@@ -115,7 +115,7 @@ dfx canister call message_board getTipById '("id")'
 
 You should get a similar result as below
 
-![]()
+![](https://github.com/ozo-vehe/ICP-azle-boilerplate/blob/main/fourth.png)
 
 ## CONTRIBUTING
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
