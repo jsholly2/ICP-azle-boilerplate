@@ -75,7 +75,7 @@ This deploy command builds, and installs the canister.tsx file
 
 We can get the address of the user by calling the `getAddressFromPrincipal()` from our canister file. Execute the following command in your terminal, replacing `address` with `bnz7o-iuaaa-aaaaa-qaaaa-cai`
 ```bash
-dfx canister call recipe addRecipe '(principal {"address"})
+dfx canister call message_board getAddressFromPrincipal '(principal {"address"})
 ```
 You should get a similar output below
 
