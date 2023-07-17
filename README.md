@@ -68,3 +68,20 @@ dfx deploy
 ```
 
 This deploy command builds, and installs the canister.tsx file
+
+## INTERACTING WITH THE CANISTER
+
+## 1. `getAddressFromPrincipal()`:
+
+We can get the address of the user by calling the `getAddressFromPrincipal()` from our canister file. Execute the following command in your terminal, replacing `address` with `bnz7o-iuaaa-aaaaa-qaaaa-cai`
+```bash
+dfx canister call recipe addRecipe '(principal {"address"})
+```
+You should get a similar output below
+
+![]()
+
+## 2. `sendTip()`:
+
+We can send a tip by calling the `sendTip()` function from our canister file. Execute the following command in your terminal, replacing `address` with `bnz7o-iuaaa-aaaaa-qaaaa-cai`
+

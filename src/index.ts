@@ -67,6 +67,10 @@ export function getTipById(id: string): Result<Tip, string> {
 // send tip
 $update;
 export async function sendTip(payload: TipPayload): Promise<Result<Tip, string>> {
+    if (!payload.name || !payload.message || payload.amount <= 0) {
+        return Result.Err<Tip, string>("Invalid tip payload");
+    }
+
     await depositTip(payload.amount);
     const tip: Tip = { id: uuidv4(), timestamp: ic.time(), ...payload };
     tipStorage.insert(tip.id, tip);
@@ -86,7 +90,6 @@ export function searchTipsByName(name: string): Result<Vec<Tip>, string> {
     for (let i = 0; i < tipLength; i++) { 
         const tip = tips[Number(i)][1];
         if (tip.name.toLowerCase().includes(name.toLowerCase())) {
-            
             matchedTips.push(tip);
         } 
     }
@@ -97,9 +100,13 @@ export function searchTipsByName(name: string): Result<Vec<Tip>, string> {
 
 
 // deposit tip
-async function depositTip(
+export async function depositTip(
     amount: nat64,
 ): Promise<Result<TransferResult, string>> {
+    if (amount <= 0) {
+        return Result.Err<TransferResult, string>("Invalid tip amount");
+    }
+
     const balance = (await getAccountBalance(ic.caller().toText())).Ok?.e8s;
     const transfer_fee = (await getTransferFee()).Ok?.transfer_fee.e8s
 
@@ -119,20 +126,24 @@ async function depositTip(
             })
             .call();
     } else{
-        ic.trap("make a deposit first")
+        return Result.Err<TransferResult, string>("Insufficient balance or invalid amount");
     }
 }
-
 
 async function getAccountBalance(
     address: Address
 ): Promise<Result<Tokens, string>> {
-    return await icpCanister
-        .account_balance({
-            account: binaryAddressFromAddress(address)
-        })
-        .call();
+    const result = await icpCanister.account_balance({
+        account: binaryAddressFromAddress(address)
+    }).call();
+
+    if (result) {
+        return result;
+    } else {
+        return Result.Err<Tokens, string>("Failed to retrieve account balance");
+    }
 }
+
 
 async function getTransferFee(): Promise<Result<TransferFee, string>> {
     return await icpCanister.transfer_fee({}).call();
@@ -146,7 +157,7 @@ export async function withdrawTips(
     amount: nat64,
 ): Promise<Result<TransferResult, string>> {
     if(ic.caller() !== owner){
-        ic.trap("Only owner can withdraw funds")
+        return Result.Err<TransferResult, string>("Only owner can withdraw funds");
     }
     const balance = (await getAccountBalance(icpCanisterAddress)).Ok?.e8s;
     const transfer_fee = (await getTransferFee()).Ok?.transfer_fee.e8s;
@@ -167,7 +178,7 @@ export async function withdrawTips(
         })
         .call();
     }else{
-        ic.trap("make a deposit first")
+        return Result.Err<TransferResult, string>("Insufficient balance or invalid amount");
     }
 }
 
