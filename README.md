@@ -71,17 +71,57 @@ This deploy command builds, and installs the canister.tsx file
 
 ## INTERACTING WITH THE CANISTER
 
-## 1. `getAddressFromPrincipal()`:
+1. `getAddressFromPrincipal()`:
 
 We can get the address of the user by calling the `getAddressFromPrincipal()` from our canister file. Execute the following command in your terminal, replacing `address` with `bnz7o-iuaaa-aaaaa-qaaaa-cai`
 ```bash
-dfx canister call message_board getAddressFromPrincipal '(principal {"address"})
+dfx canister call message_board getAddressFromPrincipal '(principal "address")'
 ```
 You should get a similar output below
 
 ![]()
 
-## 2. `sendTip()`:
+2. `sendTip()`:
 
-We can send a tip by calling the `sendTip()` function from our canister file. Execute the following command in your terminal, replacing `address` with `bnz7o-iuaaa-aaaaa-qaaaa-cai`
+We can send a tip by calling the `sendTip()` function from our canister file. Execute the following command in your terminal, replacing `tippers_name`, `your_message` and `any_amount` with your desired values. You can add as much tips as you would want.
 
+```bash
+dfx canister call message_board sendTip '(record {"name"="tippers_name"; "message"="your_message"; "amount"=any_amount})'
+```
+
+You should get a similar output below
+
+![]()
+
+3. `getTips()`:
+
+To get all the tips, run the following code in the terminal
+
+```bash
+dfx canister call message_board getTips '()'
+```
+
+You should get similar output below
+
+![]()
+
+4. `getTipById()`:
+
+To get a particular tip bu it's id, run the code below in the terminal, replacing `id` with the id of the tip.
+
+```bash
+dfx canister call message_board getTipById '("id")'
+```
+
+You should get a similar result as below
+
+![]()
+
+## CONTRIBUTING
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+- Fork the Project
+- Create your new feature branch (git checkout -b feature/new_feature)
+- Commit your changes (git commit -m 'icluded a new feature(s)')
+- Push to the branch (git push origin feature/new_feature)
+- Open a pull request
