@@ -98,10 +98,19 @@ export function searchTipsByName(name: string): Result<Vec<Tip>, string> {
 }
 
 
+// returns the amount of cycles available in the canister
+$query;
+export function canisterBalance(): nat64 {
+    return ic.canisterBalance();
+}
+
+
+
 
 // deposit tip
+$update
 export async function depositTip(
-    amount: nat64,
+    amount: nat64
 ): Promise<Result<TransferResult, string>> {
     if (amount <= 0) {
         return Result.Err<TransferResult, string>("Invalid tip amount");
@@ -130,6 +139,8 @@ export async function depositTip(
     }
 }
 
+
+// get account balance
 async function getAccountBalance(
     address: Address
 ): Promise<Result<Tokens, string>> {
@@ -144,8 +155,8 @@ async function getAccountBalance(
     }
 }
 
-
-async function getTransferFee(): Promise<Result<TransferFee, string>> {
+$update;
+export async function getTransferFee(): Promise<Result<TransferFee, string>> {
     return await icpCanister.transfer_fee({}).call();
 }
 
